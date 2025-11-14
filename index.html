@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Countdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4 overflow-hidden"
+  >
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-20 left-10 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-700"
+      ></div>
+      <div
+        class="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-1000"
+      ></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-4xl mx-auto">
+      <!-- Main Counter Card -->
+      <div
+        class="bg-white/70 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/50 shadow-2xl"
+      >
+        <!-- Event Title -->
+        <div class="text-center mb-4 sm:mb-6 md:mb-8">
+          <div
+            class="text-blue-400/60 text-xs sm:text-sm uppercase tracking-widest mb-2 sm:mb-3 font-medium"
+          >
+            Counting Down To
+          </div>
+          <div
+            id="eventTitle"
+            class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3 sm:mb-4 px-4"
+          >
+            Final Examination
+          </div>
+          <div
+            class="h-1 w-20 sm:w-24 mx-auto bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 rounded-full"
+          ></div>
+        </div>
+
+        <!-- Days Counter -->
+        <div class="text-center my-8 sm:my-10 md:my-12 lg:my-14">
+          <div
+            id="daysCount"
+            class="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3 sm:mb-4 md:mb-6 leading-none tracking-tight transition-all duration-500"
+          >
+            --
+          </div>
+          <div
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-700 tracking-widest"
+          >
+            DAYS LEFT
+          </div>
+        </div>
+
+        <!-- Date Information -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8 md:mt-10 pt-6 sm:pt-8 border-t border-blue-200/50"
+        >
+          <div class="text-center">
+            <div
+              class="text-blue-400/60 text-xs uppercase tracking-widest mb-2 font-medium"
+            >
+              Today
+            </div>
+            <div
+              id="todayDate"
+              class="text-sm sm:text-base md:text-lg text-gray-600 font-medium"
+            >
+              --
+            </div>
+          </div>
+          <div class="text-center">
+            <div
+              class="text-blue-400/60 text-xs uppercase tracking-widest mb-2 font-medium"
+            >
+              Target Date
+            </div>
+            <div
+              id="targetDate"
+              class="text-sm sm:text-base md:text-lg text-indigo-700 font-semibold"
+            >
+              --
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ========================================
+      // CONFIGURATION
+      // ========================================
+      const EVENT_TITLE = "Std 12 Commerce Board Examination"; // What you're counting down to
+      const TARGET_DATE = "2026-02-12"; // Your target date
+      // ========================================
+
+      function calculateDaysLeft() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const target = new Date(TARGET_DATE);
+        target.setHours(0, 0, 0, 0);
+
+        const diffTime = target - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        return diffDays;
+      }
+
+      function formatDate(dateString) {
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(dateString).toLocaleDateString("en-US", options);
+      }
+
+      function getTodayDate() {
+        const today = new Date();
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return today.toLocaleDateString("en-US", options);
+      }
+
+      function updateDisplay() {
+        const daysLeft = calculateDaysLeft();
+
+        document.getElementById("daysCount").textContent = daysLeft;
+        document.getElementById("targetDate").textContent =
+          formatDate(TARGET_DATE);
+        document.getElementById("todayDate").textContent = getTodayDate();
+        document.getElementById("eventTitle").textContent = EVENT_TITLE;
+      }
+
+      // Initialize
+      updateDisplay();
+    </script>
+
+    <style>
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .delay-700 {
+        animation-delay: 700ms;
+      }
+      .delay-1000 {
+        animation-delay: 1000ms;
+      }
+    </style>
+  </body>
+</html>
